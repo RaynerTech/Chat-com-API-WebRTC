@@ -10,6 +10,7 @@
        
 
         .sepa{
+            width:100%;
             display:flex;
             height:100vh;
             margin:0;
@@ -22,7 +23,7 @@
 
 
         video{
-            max-width:calc(50% - 100px);
+            width:80%;
             box-sizing:border-box;
             margin:0 50px;
             border-radius:2px;
@@ -48,6 +49,13 @@
                 margin: 20px 0;
                 padding: 10px;
             }
+
+            @media (max-width: 600px)
+            {
+                video{
+                   max-width:calc(50% - 70px);
+                }
+            } 
 
 
     </style>
