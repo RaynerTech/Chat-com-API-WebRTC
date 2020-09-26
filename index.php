@@ -119,6 +119,7 @@ drone.on('open',error => {
 
     })
 
+/**teste do web socket */
     room.on('members', members=>{
         console.log("Conectado!")
 
