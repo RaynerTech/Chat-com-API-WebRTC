@@ -4,7 +4,8 @@
 <title>Vídeo Chat</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="js/chat.js"></script> 
+    <script src='https://cdn.scaledrone.com/scaledrone.min.js' type='text/javascript'></script>
+
     <style>
         
        
@@ -72,5 +73,60 @@
         <video id="remove"></video>
         </div>
 
+
+<script>
+    
+if(!location.hash){
+    location.hash = Math.floor(Math.random() * 0xFFFFFF).toString(16)
+
+}
+
+const roomHash = location.hash.substring(1)
+
+/*Channel ID GERADO NO SITE https://dashboard.scaledrone.com/*/
+const drone = new ScaleDrone('#####');
+
+const roomName = 'observable-'+roomHash
+
+/*Servidor de conecçãoj*/
+const configuration = {
+    iceServers:[
+        {
+            urls: 'stun:stun.l.google.com:19302'
+        }
+    ]
+}
+
+let room
+let pc
+
+let number = 0
+
+function OnSuccess(){}
+
+function onError(){
+    console.log(error)
+
+}
+
+/*Tratamento de erro*/
+drone.on('open',error => {
+    if(error)
+        return console.log(error)
+    room = drone.subscribe(roomName)
+
+    room.on('open', error =>{
+
+    })
+
+    room.on('members', members=>{
+        console.log("Conectado!")
+
+        console.log("conexões abertas " + members.length)
+    })
+
+})
+
+</script>
 </body>
 </html>
