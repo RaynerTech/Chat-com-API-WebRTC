@@ -69,8 +69,8 @@
    
 
   <div class="sepa">
-        <video id="local"></video>
-        <video id="remove"></video>
+        <video id="local" autoplay muted></video>
+        <video id="remove" autoplay></video>
         </div>
 
 
@@ -84,7 +84,7 @@ if(!location.hash){
 const roomHash = location.hash.substring(1)
 
 /*Channel ID GERADO NO SITE https://dashboard.scaledrone.com/*/
-const drone = new ScaleDrone('TzYGeQtKdHe82oOz');
+const drone = new ScaleDrone('####');
 
 const roomName = 'observable-'+roomHash
 
@@ -132,7 +132,11 @@ drone.on('open',error => {
    
     })
 /** */
-    function sendMessage(message){
+  
+})
+
+
+function sendMessage(message){
         drone.publish({
             room: roomName,message
         })
@@ -157,15 +161,20 @@ drone.on('open',error => {
         pc.ontrack = event =>{
             const stream = event.streams[0]
 
-            if(!remoteVideo.srtObject || remoteVideo.srtObject.id !== stream.id){
-                remoteVideo.srtObject = stream
+            if(!remote.srcObject || remote.srtObject.id !== stream.id){
+                remote.srcObject = stream
             }
         }
+
+        navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true
+        }).then(stream =>{
+            local.srcObject = stream
+            stream.getTracks().forEach(track=>pc.addTrack(track,stream))
+        },onError)
+         
     }
-
-
-
-})
 
 </script>
 </body>
