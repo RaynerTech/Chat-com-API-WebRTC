@@ -84,7 +84,7 @@ if(!location.hash){
 const roomHash = location.hash.substring(1)
 
 /*Channel ID GERADO NO SITE https://dashboard.scaledrone.com/*/
-const drone = new ScaleDrone('#####');
+const drone = new ScaleDrone('TzYGeQtKdHe82oOz');
 
 const roomName = 'observable-'+roomHash
 
@@ -147,10 +147,18 @@ drone.on('open',error => {
             }
         }
 
-        if(ifOfferer){
+        if(isOfferer){
             pc.onnegotiationneeded = () =>{
                 pc.createOffer().then(localDescCreated).catch(onError)
 
+            }
+        }
+
+        pc.ontrack = event =>{
+            const stream = event.streams[0]
+
+            if(!remoteVideo.srtObject || remoteVideo.srtObject.id !== stream.id){
+                remoteVideo.srtObject = stream
             }
         }
     }
