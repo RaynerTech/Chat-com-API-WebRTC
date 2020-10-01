@@ -124,7 +124,38 @@ drone.on('open',error => {
         console.log("Conectado!")
 
         console.log("conexões abertas " + members.length)
+  /**Validação controle de usuarios  */      
+        number = members.length - 1
+        const isOfferer = members.length >= 2
+
+        startWebRTC(isOfferer)
+   
     })
+/** */
+    function sendMessage(message){
+        drone.publish({
+            room: roomName,message
+        })
+    }
+/**detectando os eventos */
+    function startWebRTC(isOfferer){
+        pc = new RTCPeerConnection(configuration)
+
+        pc.onicecandidate = event =>{
+            if(event.candidate){
+                sedMessage({'candidate':event.candidate})
+            }
+        }
+
+        if(ifOfferer){
+            pc.onnegotiationneeded = () =>{
+                pc.createOffer().then(localDescCreated).catch(onError)
+
+            }
+        }
+    }
+
+
 
 })
 
